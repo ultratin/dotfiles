@@ -1,14 +1,21 @@
-# If you come from bash you might have to change your $PATH.
-# export PATH=$HOME/bin:$HOME/.local/bin:/usr/local/bin:$PATH
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
 
-# Path to your Oh My Zsh installation.
+# If you come from bash you might have to change your $PATH.
+export PATH=$HOME/bin:/usr/local/bin:$PATH
+
+# Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time Oh My Zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
-ZSH_THEME="robbyrussell"
+ZSH_THEME="powerlevel10k/powerlevel10k"
 
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
@@ -70,13 +77,7 @@ ZSH_THEME="robbyrussell"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(
-	git
-	zsh-autosuggestions
-	zsh-syntax-highlighting
-	asdf
-	you-should-use
-)
+plugins=(git zsh-syntax-highlighting zsh-autosuggestions asdf terraform you-should-use)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -109,9 +110,19 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
-alias reload=exec $SHELL
-alias c=clear
-export PATH="${ASDF_DATA_DIR:-$HOME/.asdf}/shims:$PATH"
+source ~/.zsh_aliases
 
-eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+HISTFILE=~/.zsh_history
+HISTSIZE=5000000
+SAVEHIST=$HISTSIZE
+
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+# Set up fzf key bindings and fuzzy completion
+source <(fzf --zsh)
 eval "$(zoxide init --cmd cd zsh)"
+eval "$(uv generate-shell-completion zsh)"
+eval "$(uvx --generate-shell-completion zsh)"
+eval "$(direnv hook zsh)"
+
+# Per device settings
+[[ ! -f ~/.zshrc_local ]] || source ~/.zshrc_local
