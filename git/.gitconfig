@@ -1,0 +1,14 @@
+[user]
+	email = 9104508+ultratin@users.noreply.github.com
+	name = Ryan Tin
+[push]
+	autoSetupRemote = true
+[credential "https://github.com"]
+	helper = !/opt/homebrew/bin/gh auth git-credential
+[credential "https://gist.github.com"]
+	helper = 
+	helper = !/opt/homebrew/bin/gh auth git-credential
+[url "git@github.com:"]
+	insteadOf = https://github.com/
+[pull]
+	rebase = true
