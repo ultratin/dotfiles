@@ -13,5 +13,6 @@
 [alias]
 	fm = !git fetch && git merge origin/master
 	fr = !git fetch && git rebase
+	nb = !git checkout master && git pull
 [pull]
 	rebase = true
