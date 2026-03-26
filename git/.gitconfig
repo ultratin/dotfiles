@@ -10,5 +10,9 @@
 	helper = !/opt/homebrew/bin/gh auth git-credential
 [url "git@github.com:"]
 	insteadOf = https://github.com/
+[alias]
+	fm = !git fetch && git merge origin/master
+	fr = !git fetch && git rebase
+	nb = !git checkout master && git pull
 [pull]
 	rebase = true
