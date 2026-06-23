@@ -126,3 +126,10 @@ eval "$(direnv hook zsh)"
 
 # Per device settings
 [[ ! -f ~/.zshrc_local ]] || source ~/.zshrc_local
+# bun completions
+[ -s "/Users/ryantin/.bun/_bun" ] && source "/Users/ryantin/.bun/_bun"
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
+
