@@ -1,6 +1,7 @@
 [user]
 	email = 9104508+ultratin@users.noreply.github.com
 	name = Ryan Tin
+	signingkey = /Users/ryantin/.ssh/id_ed25519_macbook pro m2.pub
 [push]
 	autoSetupRemote = true
 [credential "https://github.com"]
@@ -14,5 +15,13 @@
 	pr = !git pull --rebase
 	nb = !git checkout $(git symbolic-ref refs/remotes/origin/HEAD | sed 's@^refs/remotes/origin/@@') && git pull
 	fm = !git fetch && git merge $(git symbolic-ref --short refs/remotes/origin/HEAD)
+	tidy = "!f() { git rev-parse --git-dir >/dev/null || return 1; git fetch --prune --quiet; base=$(git symbolic-ref --quiet --short refs/remotes/origin/HEAD || echo origin/master); cur=$(git branch --show-current); { git for-each-ref --format=\"%(refname:short) %(upstream:track)\" refs/heads | awk \"/\\[gone\\]\\$/{print \\$1}\"; git branch --merged \"$base\" --format=\"%(refname:short)\"; } | sort -u | grep -vxE \"main|master|develop\" | grep -vxF \"$cur\" | grep -v \"^\\$\" | while read -r b; do if [ \"$1\" = \"-n\" ] || [ \"$1\" = \"--dry-run\" ]; then echo \"would delete $b ($(git rev-parse --short \"$b\"))\"; else git branch -D \"$b\"; fi; done; }; f \"$@\""
 [pull]
 	rebase = true
+	ff = only
+[gpg]
+	format = ssh
+[commit]
+	gpgsign = true
+[tag]
+	gpgsign = true
