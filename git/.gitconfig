@@ -18,7 +18,6 @@
 	tidy = "!f() { git rev-parse --git-dir >/dev/null || return 1; git fetch --prune --quiet; base=$(git symbolic-ref --quiet --short refs/remotes/origin/HEAD || echo origin/master); cur=$(git branch --show-current); { git for-each-ref --format=\"%(refname:short) %(upstream:track)\" refs/heads | awk \"/\\[gone\\]\\$/{print \\$1}\"; git branch --merged \"$base\" --format=\"%(refname:short)\"; } | sort -u | grep -vxE \"main|master|develop\" | grep -vxF \"$cur\" | grep -v \"^\\$\" | while read -r b; do if [ \"$1\" = \"-n\" ] || [ \"$1\" = \"--dry-run\" ]; then echo \"would delete $b ($(git rev-parse --short \"$b\"))\"; else git branch -D \"$b\"; fi; done; }; f \"$@\""
 [pull]
 	rebase = true
-	ff = only
 [gpg]
 	format = ssh
 [commit]
